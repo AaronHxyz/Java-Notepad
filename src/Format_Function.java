@@ -31,35 +31,8 @@ public class Format_Function {
         }
     }
 
-    /*** Creates Font objects for the supported fonts at the given size.
-     * These Font objects are reused when applying fonts to the text area.
-     * @param fontSize the font size in points */
-    public void createFont(int fontSize) {
-        arial = new Font("Arial", Font.PLAIN, fontSize);
-        comicSans = new Font("Comic Sans", Font.PLAIN, fontSize);
-        timesNewRoman = new Font("TimesNewRoman", Font.PLAIN, fontSize);
-
-    }
-
-    /*** Sets the font of the text area to the selected font.
-     * If the font name is null or not recognized, no action is taken.
-     * @param font the name of the font to set */
-    public void setFont(String font) {
-        selectedFont = font;
-
-        if (selectedFont == null) return;
-
-        //apply selected font to text area
-        switch (selectedFont) {
-            case "Arial":
-                gui.getTextArea().setFont(arial);
-                break;
-            case "Comic_Sans":
-                gui.getTextArea().setFont(comicSans);
-                break;
-            case "Times_New_Roman":
-                gui.getTextArea().setFont(timesNewRoman);
-                break;
-        }
+    public void showFontDialog() {
+        FontDialog fontDialog = new FontDialog(gui);
+        fontDialog.setVisible(true);
     }
 }

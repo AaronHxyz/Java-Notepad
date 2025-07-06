@@ -158,22 +158,9 @@ public class GUI extends JFrame implements ActionListener {
                 JCheckBoxMenuItem source = (JCheckBoxMenuItem) e.getSource();
                 source.setSelected(isWordWrapOn);
                 break;
-            case "Font_Arial":
-                format.setFont("Arial");
+            case "Font...":
+                format.showFontDialog();
                 break;
-            case "Font_Comic_Sans":
-                format.setFont("Comic Sans");
-                break;
-            case "Font_Times_New_Roman":
-                format.setFont("Times New Roman");
-                break;
-            case "FontSize_8": format.createFont(8); break;
-            case "FontSize_12": format.createFont(12); break;
-            case "FontSize_16": format.createFont(16); break;
-            case "FontSize_20": format.createFont(20); break;
-            case "FontSize_24": format.createFont(24); break;
-            case "FontSize_28": format.createFont(28); break;
-            case "FontSize_32": format.createFont(32); break;
         }
     }
 

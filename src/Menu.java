@@ -106,44 +106,12 @@ public class Menu {
         wordWrapItem.addActionListener(gui);
         formatMenu.add(wordWrapItem);
 
-        //font submenu
-        JMenu fontSubMenu = new JMenu("Font");
-        fontSubMenu.setFont(menuFont);
+        JMenuItem fontDialogItem = new JMenuItem("Font...");
+        fontDialogItem.setFont(menuFont);
+        fontDialogItem.setActionCommand("Font...");
+        fontDialogItem.addActionListener(gui);
 
-        JMenuItem comicSansItem = new JMenuItem("Comic Sans");
-        comicSansItem.setFont(menuFont);
-        comicSansItem.setActionCommand("Font_Comic Sans");
-        comicSansItem.addActionListener(gui);
-
-        JMenuItem arialItem = new JMenuItem("Arial");
-        arialItem.setFont(menuFont);
-        arialItem.setActionCommand("Font_Arial");
-        arialItem.addActionListener(gui);
-
-        JMenuItem timesNewRomanItem = new JMenuItem("Times New Roman");
-        arialItem.setFont(menuFont);
-        arialItem.setActionCommand("Font_Times_New_Roman");
-        arialItem.addActionListener(gui);
-
-        fontSubMenu.add(comicSansItem);
-        fontSubMenu.add(arialItem);
-        fontSubMenu.add(timesNewRomanItem);
-
-        formatMenu.add(fontSubMenu);
-
-        JMenu fontSizeSubMenu = new JMenu("Font Size");
-        fontSizeSubMenu.setFont(menuFont);
-
-        int[] sizes = {8, 12, 16, 20, 24, 28, 32};
-        for (int size : sizes) {
-            JMenuItem sizeItem = new JMenuItem(String.valueOf(size));
-            sizeItem.setFont(menuFont);
-            sizeItem.setActionCommand("FontSize_" + size);
-            sizeItem.addActionListener(gui);
-            fontSizeSubMenu.add(sizeItem);
-        }
-
-        formatMenu.add(fontSizeSubMenu);
+        formatMenu.add(fontDialogItem);
 
         return formatMenu;
     }
