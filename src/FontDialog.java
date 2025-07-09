@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 public class FontDialog extends JDialog {
 
     private GUI gui;
+    private JTextField currentFontField, currentFontStyleField, fontSizeField;
 
     public FontDialog(GUI gui) {
         this.gui = gui;
@@ -26,6 +27,53 @@ public class FontDialog extends JDialog {
         addFontPicker();
         addFontStylePicker();
         addFontSizePicker();
+
+        //apply + cancel buttons
+        JButton applyButton = new JButton("Ok");
+        applyButton.setBounds(230, 265, 75, 25);
+
+        applyButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String fontType = currentFontField.getText();
+
+                int fontStyle;
+                switch (currentFontStyleField.getText()) {
+                    case "Plain":
+                        fontStyle = Font.PLAIN;
+                        break;
+                    case "Bold":
+                        fontStyle = Font.BOLD;
+                        break;
+                    case "Italic":
+                        fontStyle = Font.ITALIC;
+                        break;
+                    default: //BoldItalic:
+                        fontStyle = Font.BOLD | Font.ITALIC;
+                        break;
+                }
+
+                int fontSize = Integer.parseInt(fontSizeField.getText());
+
+                Font newFont = new Font(fontType, fontStyle, fontSize);
+
+                gui.getTextArea().setFont(newFont);
+
+                FontDialog.this.dispose();
+            }
+        });
+
+        add(applyButton);
+
+        JButton cancelButton = new JButton("Cancel");
+        cancelButton.setBounds(315, 265, 75, 25);
+        cancelButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                FontDialog.this.dispose();
+            }
+        });
+        add(cancelButton);
     }
     private void addFontPicker() {
         JLabel fontLabel = new JLabel("Font:");
@@ -36,7 +84,7 @@ public class FontDialog extends JDialog {
         JPanel fontPanel = new JPanel();
         fontPanel.setBounds(10, 15, 125, 160);
 
-        JTextField currentFontField = new JTextField(gui.getTextArea().getFont().getFontName());
+        currentFontField = new JTextField(gui.getTextArea().getFont().getFontName());
         currentFontField.setPreferredSize(new Dimension(125, 25));
         currentFontField.setEditable(false);
         fontPanel.add(currentFontField);
@@ -114,7 +162,7 @@ public class FontDialog extends JDialog {
                 break;
         }
 
-        JTextField currentFontStyleField = new JTextField(currentFontStyleName);
+        currentFontStyleField = new JTextField(currentFontStyleName);
         currentFontStyleField.setPreferredSize(new Dimension(125, 25));
         currentFontStyleField.setEditable(false);
         fontStylePanel.add(currentFontStyleField);
@@ -238,7 +286,7 @@ public class FontDialog extends JDialog {
         JPanel fontSizePanel = new JPanel();
         fontSizePanel.setBounds(275, 15, 125, 160);
 
-        JTextField fontSizeField = new JTextField(Integer.toString(gui.getTextArea().getFont().getSize()));
+        fontSizeField = new JTextField(Integer.toString(gui.getTextArea().getFont().getSize()));
         fontSizeField.setPreferredSize(new Dimension(125, 25));
         fontSizeField.setEditable(false);
         fontSizePanel.add(fontSizeField);
