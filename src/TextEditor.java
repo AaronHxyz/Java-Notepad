@@ -33,4 +33,7 @@ public class TextEditor {
     public JTextArea getTextArea() {
         return textArea;
     }
+
+    public int getFontSize() {return textArea.getFont().getSize(); }
 }
+

@@ -1,6 +1,7 @@
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -18,6 +19,8 @@ public class GUI extends JFrame implements ActionListener {
     public CareTaker caretaker = new CareTaker(); //memento caretaker
     private boolean isRestoring = false;
     public boolean isWordWrapOn = false;
+    private final int defaultFontSize;
+    private int currentFontSize;
 
     public static void main(String[] args) {
         new GUI();
@@ -40,6 +43,10 @@ public class GUI extends JFrame implements ActionListener {
         //creates menu and passes caretaker and textEditor for undo/redo stuff
         Menu menu = new Menu(this, caretaker, textEditor);
         window.setJMenuBar(menu.createMenuBar());
+
+        //variables used for zooming in/out and restoring to default
+        defaultFontSize = textEditor.getFontSize();
+        currentFontSize = defaultFontSize;
 
         window.setVisible(true);
 
@@ -120,33 +127,15 @@ public class GUI extends JFrame implements ActionListener {
 
         // switch case function calls for every menu option
         switch (command) {
-            case "New":
-                file.newFile();
-                break;
-            case "New Window":
-                file.newWindow();
-                break;
-            case "Open...":
-                file.openFile();
-                break;
-            case "Save":
-                file.saveFile();
-                break;
-            case "Save As...":
-                file.saveFileAs();
-                break;
-            case "Exit":
-                exitAttempt();
-                break;
-            case "Cut":
-                textEditor.getTextArea().cut();
-                break;
-            case "Copy":
-                textEditor.getTextArea().copy();
-                break;
-            case "Paste":
-                textEditor.getTextArea().paste();
-                break;
+            case "New": file.newFile(); break;
+            case "New Window": file.newWindow(); break;
+            case "Open...": file.openFile(); break;
+            case "Save": file.saveFile(); break;
+            case "Save As...": file.saveFileAs(); break;
+            case "Exit": exitAttempt(); break;
+            case "Cut": textEditor.getTextArea().cut(); break;
+            case "Copy": textEditor.getTextArea().copy(); break;
+            case "Paste": textEditor.getTextArea().paste(); break;
             case "Find":
                 if (!textEditor.getTextArea().getText().isEmpty()) {
                     FindDialog findDialog = new FindDialog(window, textEditor.getTextArea());
@@ -158,9 +147,29 @@ public class GUI extends JFrame implements ActionListener {
                 JCheckBoxMenuItem source = (JCheckBoxMenuItem) e.getSource();
                 source.setSelected(isWordWrapOn);
                 break;
-            case "Font...":
-                format.showFontDialog();
+            case "Font...": format.showFontDialog(); break;
+            case "Zoom In": {
+                currentFontSize += 2;
+                Font currentFont = textEditor.getTextArea().getFont();
+                Font newFont = new Font(currentFont.getFontName(), currentFont.getStyle(), currentFontSize);
+                textEditor.getTextArea().setFont(newFont);
                 break;
+            }
+            case "Zoom Out": {
+                if (currentFontSize > 8) {
+                    currentFontSize -= 2;
+                    Font currentFont = textEditor.getTextArea().getFont();
+                    Font newFont = new Font(currentFont.getFontName(), currentFont.getStyle(), currentFontSize);
+                    textEditor.getTextArea().setFont(newFont);
+                }
+                break;
+            }
+            case "Restore Default Zoom": {
+                currentFontSize = defaultFontSize;
+                Font currentFont = textEditor.getTextArea().getFont();
+                Font newFont = new Font(currentFont.getFontName(), currentFont.getStyle(), currentFontSize);
+                textEditor.getTextArea().setFont(newFont);
+            }
         }
     }
 

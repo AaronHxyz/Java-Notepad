@@ -26,6 +26,7 @@ public class Menu {
         menuBar.add(createFileMenu());
         menuBar.add(createEditMenu());
         menuBar.add(createFormatMenu());
+        menuBar.add(createViewMenu());
 
         return menuBar;
     }
@@ -114,6 +115,40 @@ public class Menu {
         formatMenu.add(fontDialogItem);
 
         return formatMenu;
+    }
+
+    /*** Creates the view menu.
+     * @return JMenu representing the File menu*/
+    private JMenu createViewMenu() {
+        JMenu viewMenu = new JMenu("View");
+        viewMenu.setFont(menuFont);
+
+        //submenu
+        JMenu zoomSubMenu = new JMenu("Zoom");
+        zoomSubMenu.setFont(menuFont);
+
+        JMenuItem zoomInItem = new JMenuItem("Zoom In");
+        zoomInItem.setFont(menuFont);
+        zoomInItem.setActionCommand("Zoom In");
+        zoomInItem.addActionListener(gui);
+
+        JMenuItem zoomOutItem = new JMenuItem("Zoom Out");
+        zoomOutItem.setFont(menuFont);
+        zoomOutItem.setActionCommand("Zoom Out");
+        zoomOutItem.addActionListener(gui);
+
+        JMenuItem restoreDefaultZoom = new JMenuItem("Restore Default Zoom");
+        restoreDefaultZoom.setFont(menuFont);
+        restoreDefaultZoom.setActionCommand("Restore Default Zoom");
+        restoreDefaultZoom.addActionListener(gui);
+
+        zoomSubMenu.add(zoomInItem);
+        zoomSubMenu.add(zoomOutItem);
+        zoomSubMenu.add(restoreDefaultZoom);
+
+        viewMenu.add(zoomSubMenu);
+
+        return viewMenu;
     }
 
     /*** Utility method to create a JMenuItem with a given label,
