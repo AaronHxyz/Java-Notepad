@@ -1,5 +1,4 @@
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.*;
 
 /*** A dialog window that allows the user to search for text in the notepad.*/
@@ -14,21 +13,37 @@ public class FindDialog extends JDialog {
      * @param parent the parent JFrame that owns this dialog
      * @param textArea the JTextArea to search within */
     public FindDialog(JFrame parent, JTextArea textArea) {
-        super(parent, "Find", false);
         this.textArea = textArea;
-
-        setLayout(new FlowLayout());
-        setSize(400, 100);
+        setTitle("Find");
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setSize(380, 220);
         setLocationRelativeTo(parent);
+        setModal(false);
 
-        add(new JLabel("Find What:"));
-        searchField = new JTextField(20);
+        setLayout(null);
+
+        addWindowComponents();
+
+    }
+    private void addWindowComponents() {
+        JLabel findWhatLabel = new JLabel("Find what:");
+        findWhatLabel.setBounds(10, 20, 70, 25);
+        add(findWhatLabel);
+
+        searchField = new JTextField();
+        searchField.setBounds(75, 20, 180, 25);
         add(searchField);
 
         findNextButton = new JButton("Find Next");
+        findNextButton.setBounds(260, 20, 90, 25);
         add(findNextButton);
 
         findNextButton.addActionListener(e -> findNext());
+
+        JButton cancelButton = new JButton("Cancel");
+        cancelButton.setBounds(260, 55, 90, 25);
+        cancelButton.addActionListener(e -> dispose());
+        add(cancelButton);
 
         //resets search when opened
         addWindowListener(new WindowAdapter() {
